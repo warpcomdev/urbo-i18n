@@ -37,6 +37,14 @@ LABELS = [
     "$.widgets[?(@.type=='timeseries')].conf.lines[*].label"
 ]
 
+# Estas palabras se ignoran a la hora de derivar
+# la etiqueta a partir del texto que reemplaza.
+STOPWORDS= frozenset((
+    "a", "al",
+    "de", "del",
+    "un", "una", "uno", "unos", "unas",
+    "el", "la", "los", "las",
+))
 
 class LabelSet:
     """Esta clase gestiona la generación de labels"""
@@ -53,8 +61,7 @@ class LabelSet:
             unidecode(self.alnum.sub('',
                                      x.strip().lower()))
             for x in literal.strip().split()
-            if x not in ("a", "de", "del", "el", "la", "los", "las", "un"
-                         "una", "uno")
+            if x not in STOPWORDS
         ]
         if len(tentative) <= 3:
             label = self.prefix + "-" + "-".join(tentative)
