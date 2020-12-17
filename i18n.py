@@ -125,21 +125,30 @@ def replace(json_data: Any, paths: Sequence[str], prefix: str) -> Any:
     return json_data
 
 
-def xlate_file(filename: str) -> str:
+def xlate_file(filename: str, outfile: Optional[str]=None) -> str:
     """Enables i18n in the provided file"""
     filepath = Path(filename)
     with filepath.open("r", encoding='utf-8') as infile:
-        return json.dumps(replace(json.loads(infile.read()), LABELS,
+        result = json.dumps(replace(json.loads(infile.read()), LABELS,
                                   filepath.stem),
                           indent=2,
                           sort_keys=True,
                           ensure_ascii=False).replace(" \n", "\n")
+    if outfile:
+        with Path(outfile).open("w+", encoding='utf-8') as outpath:
+            outpath.write(result)
+        return f"Output written to {outfile}"
+    return result
 
 
 if __name__ == "__main__":
 
     if len(sys.argv) < 2:
-        print("USO: %s [ruta_al_fichero.json]" % sys.argv[0])
+        print("USO: %s [ruta_al_fichero.json] <ruta_al_fichero_de_salida (opcional)>" % sys.argv[0])
         sys.exit(-1)
 
-    print(xlate_file(sys.argv[1]))
+    OUTFILE = None
+    if len(sys.argv) > 2:
+        OUTFILE = sys.argv[2]
+
+    print(xlate_file(sys.argv[1], OUTFILE))
