@@ -5,7 +5,7 @@ import sys
 import re
 import json
 from pathlib import Path
-from typing import Any, Sequence, Mapping
+from typing import Any, Sequence, Mapping, Optional
 
 from unidecode import unidecode
 from jsonpath_ng.ext import parse
