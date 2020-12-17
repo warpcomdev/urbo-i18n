@@ -14,28 +14,26 @@ from jsonpath_ng.ext import parse
 LABELS = [
     # Etiqueta "name"
     "$.name",
+    "$.widgets[*].conf.description",
+    "$.widgets[*].conf.title",
+    "$.widgets[*].conf.noDataMsg",
 
     # Atributos de widget tipo "mapa"
-    "$.widgets[?(@.type=='map')].conf.description",
     "$.widgets[?(@.type=='map')].conf.layers[*].legend.data[*].label",
     "$.widgets[?(@.type=='map')].conf.layers[*].interactivity.click.popup.rows[*].properties[*].label",
     "$.widgets[?(@.type=='map')].conf.layers[*].interactivity.click.popup.title.properties[*].label",
 
     # Widgets tipo "horizontal bar"
-    "$.widgets[?(@.type=='horizontal-bar')].conf.description",
     "$.widgets[?(@.type=='horizontal-bar')].conf.categories[*].label",
 
     # Widgets tipo "scatter"
-    "$.widgets[?(@.type=='scatter')].conf.description",
     "$.widgets[?(@.type=='scatter')].conf.thresholds[*].label",
 
     # Widgets tipo "table"
-    "$.widgets[?(@.type=='table')].conf.description",
     "$.widgets[?(@.type=='table')].conf.columns[*].name",
     "$.widgets[?(@.type=='table')].conf.columns[*].textTransform.labels[*]",
 
     # Widgets tipo "timeseries"
-    "$.widgets[?(@.type=='timeseries')].conf.description",
     "$.widgets[?(@.type=='timeseries')].conf.lines[*].label"
 ]
 
