@@ -13,10 +13,26 @@ from jsonpath_ng.ext import parse
 # pylint: disable=line-too-long
 LABELS = [
     # Etiqueta "name"
-    "$.name",
+    #"$.name",      JP: no esta funcionando
     "$.widgets[*].conf.description",
     "$.widgets[*].conf.title",
     "$.widgets[*].conf.noDataMsg",
+
+    # Atributos de widget tipo "basic-map-ol"  
+    "$.widgets[?(@.type=='basic-map-ol')].description",
+    
+    # Widgets tipo "datepicker"   
+    "$.widgets[?(@.type=='datepicker')].description",
+
+    # Widgets tipo "detail"
+    "$.widgets[?(@.type=='detail')].conf.columns[*].name",    
+    "$.widgets[?(@.type=='detail')].description",
+
+    # Widgets tipo "gauge"
+    "$.widgets[?(@.type=='gauge')].conf.variable.label",
+    "$.widgets[?(@.type=='gauge')].conf.defaultThreshold.label",    
+    "$.widgets[?(@.type=='gauge')].conf.thresholds[*].label", 
+    "$.widgets[?(@.type=='gauge')].description",
 
     # Atributos de widget tipo "mapa"
     "$.widgets[?(@.type=='map')].conf.layers[*].legend.data[*].label",
@@ -26,15 +42,31 @@ LABELS = [
     # Widgets tipo "horizontal bar"
     "$.widgets[?(@.type=='horizontal-bar')].conf.categories[*].label",
 
+    # Widgets tipo "heatmap"
+    "$.widgets[?(@.type=='heatmap')].conf.heatmapVar.label",   
+    "$.widgets[?(@.type=='heatmap')].description",
+
     # Widgets tipo "scatter"
     "$.widgets[?(@.type=='scatter')].conf.thresholds[*].label",
+
+    # Widgets tipo "single-data"   
+    "$.widgets[?(@.type=='single-data')].description",
 
     # Widgets tipo "table"
     "$.widgets[?(@.type=='table')].conf.columns[*].name",
     "$.widgets[?(@.type=='table')].conf.columns[*].textTransform.labels[*]",
+    "$.widgets[?(@.type=='table')].description",
 
     # Widgets tipo "timeseries"
-    "$.widgets[?(@.type=='timeseries')].conf.lines[*].label"
+    "$.widgets[?(@.type=='timeseries')].conf.lines[*].label",
+    "$.widgets[?(@.type=='timeseries')].description",
+    "$.widgets[?(@.type=='timeseries')].conf.axis.x.label",
+    #"$.widgets[?(@.type=='timeseries')].conf.axis.y.label",      JP: no esta funcionando
+    #"$.widgets[?(@.type=='timeseries')].conf.axis.y2.label",     JP: no esta funcionando
+
+    # Widgets tipo "tabs"
+    "$.widgets[?(@.type=='tabs')].description",
+    "$.widgets[?(@.type=='tabs')].conf.tabs[*].title"
 ]
 
 # Estas palabras se ignoran a la hora de derivar
