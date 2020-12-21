@@ -6,6 +6,7 @@ import re
 import json
 from pathlib import Path
 from typing import Any, Sequence, Mapping, Optional
+from binascii import crc_hqx as crc16
 
 from unidecode import unidecode
 from jsonpath_ng.ext import parse
@@ -99,7 +100,7 @@ class LabelSet:
     def __init__(self, prefix: str):
         self.prefix = prefix
         self.labels = set()
-        self.index = 1
+        self.index = set()
         self.alnum = re.compile(r'[\W_]+')
 
     def label(self, literal: str) -> str:
@@ -114,9 +115,12 @@ class LabelSet:
         if len(tentative) <= 3:
             label = self.prefix + "-" + "-".join(tentative)
         else:
-            # Si no, genero un indice incremental
-            label = self.prefix + "-text-" + str(self.index)
-            self.index += 1
+            # Si no, genero un indice basado en el texto
+            index = crc16(literal.encode('utf8'), 0)
+            while index in self.index:
+                index += 1
+            self.index.add(index)
+            label = self.prefix + "-text-%0.4x" % index
 
         # Make sure the label is not repeated for different texts
         if label in self.labels:
@@ -154,7 +158,7 @@ def replace(json_data: Any, paths: Sequence[str], prefix: str) -> Any:
     literals = [i18n_es.get(match.value, match.value) for match in matches]
 
     # Ahora construyo la correspondencia entre texto y label.
-    reverse_i18n = LabelSet(prefix).label_map(literals)
+    reverse_i18n = LabelSet(json_data.get('slug', prefix)).label_map(literals)
 
     # Y construyo el nuevo diccionario de i18n
     new_i18n = {
