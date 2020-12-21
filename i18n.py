@@ -25,11 +25,11 @@ LABELS = [
     "$.widgets[?(@.type=='datepicker')].description",
 
     # Widgets tipo "detail"
-    "$.widgets[?(@.type=='detail')].conf.columns[*].name",    
+    #"$.widgets[?(@.type=='detail')].conf.columns[*].name",          JP: no esta funcionando
     "$.widgets[?(@.type=='detail')].description",
 
     # Widgets tipo "gauge"
-    "$.widgets[?(@.type=='gauge')].conf.variable.label",
+    #"$.widgets[?(@.type=='gauge')].conf.variable.label",      JP: no esta funcionando
     "$.widgets[?(@.type=='gauge')].conf.defaultThreshold.label",    
     "$.widgets[?(@.type=='gauge')].conf.thresholds[*].label", 
     "$.widgets[?(@.type=='gauge')].description",
@@ -41,6 +41,9 @@ LABELS = [
 
     # Widgets tipo "horizontal bar"
     "$.widgets[?(@.type=='horizontal-bar')].conf.categories[*].label",
+    "$.widgets[?(@.type=='horizontal-bar')].conf.defaultThreshold.label",
+    "$.widgets[?(@.type=='horizontal-bar')].conf.thresholds[*].label",
+    "$.widgets[?(@.type=='horizontal-bar')].description",
 
     # Widgets tipo "heatmap"
     "$.widgets[?(@.type=='heatmap')].conf.heatmapVar.label",   
@@ -49,13 +52,26 @@ LABELS = [
     # Widgets tipo "scatter"
     "$.widgets[?(@.type=='scatter')].conf.thresholds[*].label",
 
-    # Widgets tipo "single-data"   
+    # Widgets tipo "single-data"
     "$.widgets[?(@.type=='single-data')].description",
 
+    # Widgets tipo "sloted-data"
+    "$.widgets[?(@.type=='sloted-data')].description",
+    "$.widgets[?(@.type=='sloted-data')].conf.components.unit",
+    "$.widgets[?(@.type=='sloted-data')].conf.components.tooltip",
+    "$.widgets[?(@.type=='sloted-data')].conf.components.styles.tooltip",
+    "$.widgets[?(@.type=='sloted-data')].conf.defaultThreshold.text",
+    "$.widgets[?(@.type=='sloted-data')].conf.defaultThreshold.tooltip",
+    "$.widgets[?(@.type=='sloted-data')].conf.thresholds[*].text",
+    "$.widgets[?(@.type=='sloted-data')].conf.thresholds[*].tooltip",
+
     # Widgets tipo "table"
-    "$.widgets[?(@.type=='table')].conf.columns[*].name",
+    #"$.widgets[?(@.type=='table')].conf.columns[*].name",      JP: no esta funcionando
     "$.widgets[?(@.type=='table')].conf.columns[*].textTransform.labels[*]",
     "$.widgets[?(@.type=='table')].description",
+
+    # Widgets tipo "template"
+    "$.widgets[?(@.type=='template')].description",
 
     # Widgets tipo "timeseries"
     "$.widgets[?(@.type=='timeseries')].conf.lines[*].label",
