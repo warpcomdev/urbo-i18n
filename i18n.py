@@ -58,9 +58,9 @@ LABELS = [
 
     # Widgets tipo "sloted-data"
     "$.widgets[?(@.type=='sloted-data')].description",
-    "$.widgets[?(@.type=='sloted-data')].conf.components.unit",
-    "$.widgets[?(@.type=='sloted-data')].conf.components.tooltip",
-    "$.widgets[?(@.type=='sloted-data')].conf.components.styles.tooltip",
+    "$.widgets[?(@.type=='sloted-data')].conf.components.*.unit",
+    "$.widgets[?(@.type=='sloted-data')].conf.components.*.tooltip",
+    "$.widgets[?(@.type=='sloted-data')].conf.components.*.styles.tooltip",
     "$.widgets[?(@.type=='sloted-data')].conf.defaultThreshold.text",
     "$.widgets[?(@.type=='sloted-data')].conf.defaultThreshold.tooltip",
     "$.widgets[?(@.type=='sloted-data')].conf.thresholds[*].text",
@@ -95,6 +95,11 @@ STOPWORDS= frozenset((
     "el", "la", "los", "las",
 ))
 
+KEYWORDS = {
+    "€": "euro",
+    "$": "dolar"
+}
+
 class LabelSet:
     """Esta clase gestiona la generación de labels"""
     def __init__(self, prefix: str):
@@ -103,29 +108,36 @@ class LabelSet:
         self.index = set()
         self.alnum = re.compile(r'[\W_]+')
 
+    def index_from(self, literal):
+        """Generate an unique index (text) from a literal"""
+        index = crc16(literal.encode('utf8'), 0)
+        while index in self.index:
+            index += 1
+        self.index.add(index)
+        return "%0.4x" % index
+
     def label(self, literal: str) -> str:
         """Asigna una etiqueta a un literal"""
         # Intento construir el label a partir del propio mensaje
+        index     = None
+        words     = [x.strip().lower() for x in literal.strip().split()]
         tentative = [
-            unidecode(self.alnum.sub('',
-                                     x.strip().lower()))
-            for x in literal.strip().split()
-            if x not in STOPWORDS
+            unidecode(self.alnum.sub('', KEYWORDS.get(word, word))).strip()
+            for word in words if word not in STOPWORDS
         ]
-        if len(tentative) <= 3:
+        tentative = [x for x in tentative if x]
+        if len(tentative) > 0 and len(tentative) <= 3:
             label = self.prefix + "-" + "-".join(tentative)
         else:
             # Si no, genero un indice basado en el texto
-            index = crc16(literal.encode('utf8'), 0)
-            while index in self.index:
-                index += 1
-            self.index.add(index)
-            label = self.prefix + "-text-%0.4x" % index
+            index = self.index_from(literal)
+            label = self.prefix + "-text-" + index
 
         # Make sure the label is not repeated for different texts
         if label in self.labels:
-            label = label + "-" + str(self.index)
-            self.index += 1
+            if index is None:
+                index = self.index_from(literal)
+            label = label + "-" + index
         self.labels.add(label)
 
         # Return the generated label
