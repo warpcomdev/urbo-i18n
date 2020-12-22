@@ -22,6 +22,13 @@ LABELS = [
     # Atributos de widget tipo "basic-map-ol"  
     "$.widgets[?(@.type=='basic-map-ol')].description",
     
+    # Widgets tipo "category"   
+    "$.widgets[?(@.type=='category')].description",
+    #"$.widgets[?(@.type=='category')].conf.categories[*].label",          JP: no esta funcionando
+    #"$.widgets[?(@.type=='category')].conf.subcategories[*].label",       JP: no esta funcionando
+    #"$.widgets[?(@.type=='category')].conf.axis.x.label",                  JP: no esta funcionando
+    #"$.widgets[?(@.type=='category')].conf.axis.y.label",                  JP: no esta funcionando
+    
     # Widgets tipo "datepicker"   
     "$.widgets[?(@.type=='datepicker')].description",
 
