@@ -69,7 +69,7 @@ LABELS = [
 
     # Widgets tipo "sloted-data"
     "$.widgets[?(@.type=='sloted-data')].description",
-    "$.widgets[?(@.type=='sloted-data')].conf.components.*.unit",
+    #"$.widgets[?(@.type=='sloted-data')].conf.components.*.unit",       JP: no esta funcionando
     "$.widgets[?(@.type=='sloted-data')].conf.components.*.tooltip",
     "$.widgets[?(@.type=='sloted-data')].conf.components.*.styles.tooltip",
     "$.widgets[?(@.type=='sloted-data')].conf.defaultThreshold.text",
