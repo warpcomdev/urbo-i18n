@@ -59,7 +59,7 @@ LABELS = [
 
     # Widgets tipo "pie"  
     "$.widgets[?(@.type=='pie')].description", 
-    "$.widgets[?(@.type=='pie')].conf.pieces[*].label",
+    #"$.widgets[?(@.type=='pie')].conf.pieces[*].label",      JP: no esta funcionando
 
     # Widgets tipo "scatter"
     "$.widgets[?(@.type=='scatter')].conf.thresholds[*].label",
